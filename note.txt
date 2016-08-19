@@ -1,0 +1,28 @@
+fputws
+fgetws
+fflush(stdout);
+mbstowcs, wcstombs
+mblen
+mbtowc, wctomb
+
+
+110.... 10..... #utf-8 для 2батовых символов.
+Первые биты - количество последовательности этой и последующей.
+Код символа песле первого нуля.
+0....... #ascii
+
+wprintf(L"%lc %lc %lc\n", 1071, 0x42F, 0b10000101111); #десятичная, шестнадцетиричная, двоичная
+11010000 10101111
+xxd
+hexdump
+od
+
+sudo dnf install speech-dispatcher-utils
+
+      stdin = freopen("/dev/stdin", "r", stdin);
+      fflush(stdin);
+      __fpurge(stdin);
+      stdin = freopen("/dev/stdin", "r", stdin);
+      fseek(stdin,0,SEEK_END);
+      rewind(stdin);
+      printf("%s", "\e[1;1H\e[2J");
