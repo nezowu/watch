@@ -5,6 +5,7 @@
 #include <wchar.h>
 #include <locale.h>
 #include <unistd.h>
+#include <stdio_ext.h>
  
 struct termios oldt, newt;
 
@@ -28,7 +29,12 @@ int main()
 	newt.c_cc[VTIME] = 1;
 	tcsetattr(0, TCSANOW, &newt);
 
-start:	flag = L'a';
+start:	sleep(1);  // сбросить буфер???
+//	stdin = freopen("/dev/stdin", "r", stdin);
+//	fflush(stdin);
+//	__fpurge(stdin);
+//	stdin = freopen("/dev/stdin", "r", stdin);
+	flag = L'a';
 	j = 0;
 	l = 0;
 	dest = 0;
@@ -48,23 +54,30 @@ start:	flag = L'a';
 		if(wch == c_term)
 			break;
 		wcsncat(wchl, &wch, 1);
+
+//		stdout = freopen("/dev/stdout", "w", stdout);
+//		printf("%s", "\e[1;1H\e[2J");
+//		stdout = freopen("/dev/stdout", "w", stdout);
+//		system("clear");
+
 		for(i=0; i< sizeof(bd)/sizeof(bd[0]); i++)
 		{
 			if(! wcsncmp(bd[i], wchl, l))
 			{
-				wprintf(L"%ls %ls\n", bd[i], wchl);
+				wprintf(L"%ls\n", bd[i]);
 				j++;
 				dest = i;
 			}
 		}
+		wprintf(L"%ls\n", wchl);
 		if(j == 1)
 			break;
 		else if(j > 1)
 			j = 0;
 		else
 		{
-			wprintf(L"%ls\n\a", L"Не найдено или ошибка в наборе");
-			usleep(100000);
+			wprintf(L"\e[1;1H\e[2J %ls\n\a", L"Не найдено или ошибка в наборе");
+//			usleep(100000);
 //			break;
 			goto start;
 		}
@@ -76,7 +89,7 @@ start:	flag = L'a';
 		tcsetattr(0, TCSANOW, &oldt);
 		return 0;
 	}
-	wprintf(L"%ls %ls\a\n", L"Всем пока!", bd[dest]);
+	wprintf(L"\e[1;1H\e[2J %ls %ls\a\n", bd[dest], L"Записано");
 	if(!fork())
 	{
 		wcstombs(sbuffstr, bd[dest], 255);
