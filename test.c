@@ -70,7 +70,7 @@ start:	flag = L'a';
 		{
 			wprintf(L"\e[1;1H\e[2J %ls\n\a", L"Не найдено или ошибка в наборе");
 			if(!fork())
-				execlp("spd-say", "spd-say", "-l", "ru", "Стой! Стрелять буду!", NULL);
+				execlp("spd-say", "spd-say", "-l", "ru", "Стой! Стрелять буду! Раапатый, разберись с ним", NULL);
 //			break;
 			goto start;
 		}

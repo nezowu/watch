@@ -32,7 +32,7 @@ int main(void)
 		fscanf(fo, "%255[^\n]\n", buff); 
 		wbuff[j] = (wchar_t *)malloc(sizeof(buff));
 		flag = mbstowcs(wcs, buff, 63);
-		wprintf(L"коверт: %d\n", flag);
+		wprintf(L"конверт: %d\n", flag);
 		wcsncpy(wbuff[j], wcs, 64);
 		j++;
 	}
@@ -41,9 +41,9 @@ int main(void)
 	for(;j>0; j--)
 	{
 		wprintf(L"%ls\n", wbuff[j-1]);
-		free(wbuff[j-1]);
+//		free(wbuff[j-1]);
 	}
-	free(wbuff);
+//	free(wbuff);
 //	printf("%d\n", i);
 	return 0;
 }
