@@ -10,11 +10,11 @@ int main(void)
 {
 	setlocale(LC_ALL, "");
 	int i, j;
-	size_t flag;
-	wchar_t **wbuff;
+	size_t mark;
+	wchar_t **bd;
 	char buff[256] = {0};
 	wchar_t wcs[64] = L"";
-//	char ** wbuff;
+//	char ** bd;
 	FILE *fo;
 	i = 0;
 	j = 0;
@@ -25,25 +25,25 @@ int main(void)
 		fscanf(fo, "%*[^\n]\n");
 		i++;
 	}
-	wbuff = (wchar_t **)malloc(i * sizeof(wchar_t*));
+	bd = (wchar_t **)malloc(i * sizeof(wchar_t*));
 	rewind(fo);
 	while(!feof(fo))
 	{
 		fscanf(fo, "%255[^\n]\n", buff); 
-		wbuff[j] = (wchar_t *)malloc(sizeof(buff));
-		flag = mbstowcs(wcs, buff, 63);
-		wprintf(L"конверт: %d\n", flag);
-		wcsncpy(wbuff[j], wcs, 64);
+		bd[j] = (wchar_t *)malloc(sizeof(buff));
+		mark = mbstowcs(wcs, buff, 63);
+		wprintf(L"конверт: %d\n", mark);
+		wcsncpy(bd[j], wcs, 64);
 		j++;
 	}
 	fclose(fo);
 //	printf("%d\n", j);
 	for(;j>0; j--)
 	{
-		wprintf(L"%ls\n", wbuff[j-1]);
-//		free(wbuff[j-1]);
+		wprintf(L"%ls\n", bd[j-1]);
+//		free(bd[j-1]);
 	}
-//	free(wbuff);
+//	free(bd);
 //	printf("%d\n", i);
 	return 0;
 }
